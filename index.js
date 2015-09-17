@@ -16,7 +16,7 @@ var eventWhiteList = {
 // Returns 'true' if the specified GitHub event type (https://developer.github.com/v3/activity/events/types/)
 // should be blocked.
 function blockEventType(gitHubEventType) {
-	return eventWhiteList[gitHubEventType];
+	return !eventWhiteList[gitHubEventType];
 }
 
 // Returns 'true' if the specified event should be blocked.
