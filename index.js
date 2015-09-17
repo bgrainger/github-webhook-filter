@@ -87,10 +87,9 @@ var server = http.createServer(function(request, response) {
 				agent: false
 			};
 			targetRequestParams.headers.Host = parsedTargetUrl.host;
-			console.log('Making request to ' + targetRequestParams.hostname);
 			var targetRequest = (isHttp ? http : https).request(targetRequestParams, function(targetResponse) {
 				// send target's response back to GitHub
-				console.log('Forwarded ' + gitHubEventType + ' event to target; received ' + targetResponse.statusCode + ' response.');
+				console.log('Forwarded ' + gitHubEventType + ' event to ' + targetRequestParams.hostname + '; received ' + targetResponse.statusCode + ' response.');
 				response.writeHead(targetResponse.statusCode, targetResponse.statusMessage, getHeaders(targetResponse.rawHeaders));
 				targetResponse.pipe(response);
 			});
