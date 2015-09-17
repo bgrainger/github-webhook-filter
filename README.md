@@ -13,7 +13,8 @@ branch.
 At https://git/Logos/YourRepoName/settings, choose "Webhooks and Services".
 
 Click "Add Webhook":
-* Payload URL: http://github-webhook-filter.lrscorp.net:4001/github?target=url-encoded-target-uri
+* Payload URL: http://github-webhook-filter.lrscorp.net:4001/{arbitrary}?target=url-encoded-target-uri
+  * `{arbitrary}` can be an arbitrary path that's useful for distinguishing these hooks in the GitHub settings UI
 * Content type: application/json
 * Secret: (blank)
 * Send me **everything**
