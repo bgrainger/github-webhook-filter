@@ -35,9 +35,21 @@ function getHeaders(rawHeaders) {
 }
 
 var server = http.createServer(function(request, response) {
-	// get 'target' query parameter
 	var parsedRequestUrl = url.parse(request.url, true);
+	if (request.method === 'GET' && parsedRequestUrl.path === '/') {
+		response.end('github-webhook-filter');
+		return;
+	}
+
+	// get 'target' query parameter
 	var targetUrl = parsedRequestUrl.query.target;
+	if (!targetUrl) {
+		console.error('Invalid request URL: ' + request.url);
+		response.statusCode = 400;
+		response.end('Missing "target" query parameter.');
+		return;
+	}
+
 	console.log('got request for ' + targetUrl);
 	var parsedTargetUrl = url.parse(targetUrl);
 
