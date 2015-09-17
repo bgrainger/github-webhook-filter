@@ -69,6 +69,7 @@ var server = http.createServer(function(request, response) {
 			var gitHubEventType = request.headers['x-github-event'];
 			if (blockEventType(gitHubEventType) || blockEvent(gitHubEventType, requestJson)) {
 				// drop this request
+				console.log('Filtering out event of type ' + gitHubEventType);
 				response.statusCode = 200;
 				response.end('Event dropped by github-webhook-filter.');
 				return;
@@ -89,6 +90,7 @@ var server = http.createServer(function(request, response) {
 			console.log('Making request to ' + targetRequestParams.hostname);
 			var targetRequest = (isHttp ? http : https).request(targetRequestParams, function(targetResponse) {
 				// send target's response back to GitHub
+				console.log('Forwarded ' + gitHubEventType + ' event to target; received ' + targetResponse.statusCode + ' response.');
 				response.writeHead(targetResponse.statusCode, targetResponse.statusMessage, getHeaders(targetResponse.rawHeaders));
 				targetResponse.pipe(response);
 			});
